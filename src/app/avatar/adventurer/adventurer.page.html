@@ -1,0 +1,100 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      Adventurer
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+
+  <ion-item class="avatar">
+    <img src= "{{ url}}"/>
+  </ion-item>
+
+  <ion-slides pager="true">
+    <ion-slide>
+      <div class="container-skinColor">
+        <p> Skin Color</p>
+        <div class="buttons-skinColor">
+          <button id="skin1" (click)="skinColor(0)">
+
+          </button>
+          <button id="skin2" (click)="skinColor(1)">
+
+          </button>
+          <button id="skin3" (click)="skinColor(2)">
+
+          </button>
+          <button id="skin4" (click)="skinColor(3)">
+
+          </button>
+          <button id="skin5" (click)="skinColor(4)">
+
+          </button>
+        </div>
+      </div>
+    </ion-slide>
+    <ion-slide>
+      <div class="container-skinColor">
+        <p> Hair</p>
+        <div class="buttons-skinColor">
+          <ion-item>
+            <ion-label>Long Hair</ion-label>
+            <ion-select interface="popover" placeholder="Select One" (ionChange)="changeHair($event)">
+              <ion-select-option *ngFor="let h of longHair" value = "{{h}}" >{{h}}</ion-select-option>
+            </ion-select>
+          </ion-item>
+          <ion-item>
+            <ion-label>Short Hair</ion-label>
+            <ion-select interface="popover" placeholder="Select One" (ionChange)="changeHair($event)">
+              <ion-select-option *ngFor="let h of shortHair" value = "{{h}}" >{{h}}</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </div>
+      </div>
+    </ion-slide>
+    <ion-slide>
+      <div class="container-skinColor">
+        <p> Eyes and Eyebrows</p>
+        <div class="buttons-skinColor">
+          <ion-item>
+            <ion-label>Eyes</ion-label>
+            <ion-select interface="popover" placeholder="Select One" (ionChange)="changeEye($event)">
+              <ion-select-option *ngFor="let h of eyes" value = "{{h}}" >{{h}}</ion-select-option>
+            </ion-select>
+          </ion-item>
+          <ion-item>
+            <ion-label>Eyebrows</ion-label>
+            <ion-select interface="popover" placeholder="Select One" (ionChange)="changeEyebrows($event)">
+              <ion-select-option *ngFor="let h of eyebrows" value = "{{h}}" >{{h}}</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </div>
+      </div>
+    </ion-slide>
+    <ion-slide>
+      <div class="container-skinColor">
+        <p> Mouth</p>
+        <div class="buttons-skinColor">
+          <ion-item>
+            <ion-label>mouth</ion-label>
+            <ion-select interface="popover" placeholder="Select One" (ionChange)="changeMouth($event)">
+              <ion-select-option *ngFor="let h of mouths" value = "{{h}}" >{{h}}</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </div>
+      </div>
+    </ion-slide>
+  </ion-slides>
+
+  <!--<div id="picker">
+    <br/>
+    <div>
+      <ion-text>
+        Color: {{colorcode}}
+      </ion-text>
+    </div>
+  </div>-->
+
+</ion-content>
