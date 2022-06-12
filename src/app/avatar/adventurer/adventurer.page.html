@@ -1,20 +1,189 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Adventurer
-    </ion-title>
+<ion-header>
+  <ion-toolbar color="light">
+    <ion-title>My Avatar</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
+<!--<div class="story-list">
+  <div class="scroll-horizontal">
+    <div class="scroll-item" *ngFor="let i of avatar">
+      <div class="item">
+        <div class="item-avatar">
+          <ion-avatar class="avatar-md has-update has-status">
+            <img src="{{i.img}}" alt="">
+          </ion-avatar>
+        </div>
+        <p class="item-label">
+          {{i.name}}
+        </p>
+      </div>
 
-  <ion-item class="avatar">
-    <img src= "{{ url}}"/>
-  </ion-item>
+    </div>
+  </div>
+</div>-->
 
-  <ion-slides pager="true">
+<div class="post-list">
+  <div class="post-item">
+    <div class="post-header">
+      <ion-row class="ion-justify-content-center ion-align-items-center">
+        <ion-col size="auto">
+          <ion-avatar class="avatar-sm">
+            <img src= "https://avatars.dicebear.com/api/adventurer/your-custom-seed.svg?b=%2360d7cf"/>
+          </ion-avatar>
+        </ion-col>
+        <ion-col>
+          <strong>Adventurer</strong>
+        </ion-col>
+        <ion-col size="auto">
+          <ion-icon name="ellipsis-horizontal"></ion-icon>
+        </ion-col>
+      </ion-row>
+    </div>
+    <div class="post-media">
+      <img src= "{{ url}}"/>
+    </div>
+    <div class="post-actions">
+      <ion-row>
+        <ion-col size="auto">
+          <ion-button size="small" fill="clear" color="dark">
+            <ion-icon name="download-outline"></ion-icon>
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </div>
+    <div class="container-input-name">
+      <ion-input mode="ios" (ionChange)="ionChange($event)" id="input-seed" placeholder="Your-name" name="seed" [(ngModel)]="seed"></ion-input>
+     </div>
+  </div>
+</div>
+<ion-content>
+
+  <div class="avatar-opt" id="div-eye" >
+    <div class="container-eye" >
+      <div class="title-btn-front">
+        <p class="text">Eyes</p>
+        <button class="bnt" (click)="mudarestado('div-eyebrows')"><ion-icon name="arrow-forward-outline" ></ion-icon></button>
+      </div>
+      <div class="box-eye">
+        <div class="opt-eye" *ngFor="let eye of eyes" (click)="changeEye(eye.id)">
+          <img src="{{eye.url}}" alt="">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="avatar-opt" id="div-eyebrows" style="display:none">
+    <div class="container-eye" >
+      <div class="title-btn-back">
+        <button class="bnt" (click)="mudarestado('div-eye')"><ion-icon name="arrow-back-outline"></ion-icon></button>
+        <p class="text">Eyebrows</p>
+      </div>
+      <div class="box-eye">
+        <div class="opt-eye" *ngFor="let eyebrow of eyebrows" (click)="changeEyebrows(eyebrow.id)">
+          <img src="{{eyebrow.url}}" alt="">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="avatar-opt" id="div-mouth" style="display:none">
+    <div class="container-eye" >
+      <div class="title-btn-front">
+        <p class="text">Mouth</p>
+      </div>
+      <div class="box-eye">
+        <div class="opt-eye" *ngFor="let mouth of mouths" (click)="changeMouth(mouth.id)">
+          <img src="{{mouth.url}}" alt="">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="avatar-opt" id="div-hair" style="display:none">
+    <div class="container-eye" >
+      <div class="title-btn-front">
+        <p class="text">Hair</p>
+      </div>
+      <div class="container-color-picker">
+        <p> Hair Color </p>
+        <div class="colorPicker"
+            ngx-colors-trigger
+            [style.background]="selectedColorHair"
+            (input)="changeColorHair()"
+            [(ngModel)]="selectedColorHair">
+        </div>
+      </div>
+      <div class="box-eye">
+        <div class="opt-eye" *ngFor="let hair of hairs" (click)="changeHair(hair.id)">
+          <img src="{{hair.url}}" alt="">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="avatar-opt" id="div-skin" style="display:none">
+    <div class="container-eye" >
+      <div class="title-btn-front">
+        <p class="text">Skin</p>
+      </div>
+      <div class="container-color-picker">
+        <p> Skin Color </p>
+        <div class="colorPickerSkin"
+            ngx-colors-trigger
+            [style.background]="selectedColorSkin"
+            (input)="changeColorSkin()"
+            [(ngModel)]="selectedColorSkin">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="avatar-opt" id="div-aces" style="display:none">
+    <div class="container-eye" >
+      <div class="title-btn-front">
+        <p class="text">Accessoires</p>
+      </div>
+      <div class="box-eye">
+        <div class="opt-eye" *ngFor="let acessorie of acessories" (click)="changeAcessorie(acessorie.id)">
+          <img src="{{acessorie.url}}" alt="">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <ion-fab horizontal="start" vertical="bottom" slot="fixed">
+    <ion-fab-button color="secondary">
+      <ion-icon md="caret-up" ios="chevron-up-circle-outline"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-list side="top">
+      <ion-fab-button color="light" (click)="mudarestado('div-eye')">
+        <ion-icon name="eye-outline"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-button color="light" (click)="mudarestado('div-mouth')">
+        <img class="icon-fab" src="\assets\img\mouth.png"/>
+      </ion-fab-button>
+      <ion-fab-button color="light" (click)="mudarestado('div-aces')" >
+        <img  class="icon-fab" src="/assets/img/aces.png"/>
+      </ion-fab-button>
+      <ion-fab-button color="light" (click)="mudarestado('div-hair')">
+        <img class="icon-fab" src="/assets/img/hair.png"/>
+      </ion-fab-button>
+      <ion-fab-button color="light" (click)="mudarestado('div-skin')">
+        <img class="icon-fab" src="/assets/img/skin.png"/>
+      </ion-fab-button>
+    </ion-fab-list>
+  </ion-fab>
+</ion-content>
+
+
+<!--<div class="container-opcoes">
+
+
+</div>
+
+<ion-slides pager="true">
     <ion-slide>
-      <div class="container-skinColor">
+      <div class="container">
         <p> Skin Color</p>
         <div class="buttons-skinColor">
           <button id="skin1" (click)="skinColor(0)">
@@ -35,66 +204,7 @@
         </div>
       </div>
     </ion-slide>
-    <ion-slide>
-      <div class="container-skinColor">
-        <p> Hair</p>
-        <div class="buttons-skinColor">
-          <ion-item>
-            <ion-label>Long Hair</ion-label>
-            <ion-select interface="popover" placeholder="Select One" (ionChange)="changeHair($event)">
-              <ion-select-option *ngFor="let h of longHair" value = "{{h}}" >{{h}}</ion-select-option>
-            </ion-select>
-          </ion-item>
-          <ion-item>
-            <ion-label>Short Hair</ion-label>
-            <ion-select interface="popover" placeholder="Select One" (ionChange)="changeHair($event)">
-              <ion-select-option *ngFor="let h of shortHair" value = "{{h}}" >{{h}}</ion-select-option>
-            </ion-select>
-          </ion-item>
-        </div>
-      </div>
-    </ion-slide>
-    <ion-slide>
-      <div class="container-skinColor">
-        <p> Eyes and Eyebrows</p>
-        <div class="buttons-skinColor">
-          <ion-item>
-            <ion-label>Eyes</ion-label>
-            <ion-select interface="popover" placeholder="Select One" (ionChange)="changeEye($event)">
-              <ion-select-option *ngFor="let h of eyes" value = "{{h}}" >{{h}}</ion-select-option>
-            </ion-select>
-          </ion-item>
-          <ion-item>
-            <ion-label>Eyebrows</ion-label>
-            <ion-select interface="popover" placeholder="Select One" (ionChange)="changeEyebrows($event)">
-              <ion-select-option *ngFor="let h of eyebrows" value = "{{h}}" >{{h}}</ion-select-option>
-            </ion-select>
-          </ion-item>
-        </div>
-      </div>
-    </ion-slide>
-    <ion-slide>
-      <div class="container-skinColor">
-        <p> Mouth</p>
-        <div class="buttons-skinColor">
-          <ion-item>
-            <ion-label>mouth</ion-label>
-            <ion-select interface="popover" placeholder="Select One" (ionChange)="changeMouth($event)">
-              <ion-select-option *ngFor="let h of mouths" value = "{{h}}" >{{h}}</ion-select-option>
-            </ion-select>
-          </ion-item>
-        </div>
-      </div>
-    </ion-slide>
-  </ion-slides>
 
-  <!--<div id="picker">
-    <br/>
-    <div>
-      <ion-text>
-        Color: {{colorcode}}
-      </ion-text>
-    </div>
-  </div>-->
 
-</ion-content>
+
+  </ion-slides>-->

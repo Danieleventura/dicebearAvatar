@@ -7,13 +7,14 @@ import { IonicModule } from '@ionic/angular';
 import { AdventurerPageRoutingModule } from './adventurer-routing.module';
 
 import { AdventurerPage } from './adventurer.page';
-
+import { NgxColorsModule } from 'ngx-colors';
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    AdventurerPageRoutingModule
+    AdventurerPageRoutingModule,
+    NgxColorsModule
   ],
   declarations: [AdventurerPage]
 })

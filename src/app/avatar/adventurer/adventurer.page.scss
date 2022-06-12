@@ -1,53 +1,250 @@
-.container-skinColor{
-  height: 50%;
+.story-list {
+  padding: 16px 0 8px;;
+  border-bottom: 1px solid var(--ion-color-light);
+
+  .scroll-horizontal {
+    padding-left: 16px;
+  }
+
+  .scroll-item {
+    align-items: center;
+    margin-right: 16px;
+    .item{
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+  }
+
+  .item-label {
+    font-size: 13px;
+    color: black;
+  }
 }
 
-.avatar{
-  width: auto;
-  height: 50%;
-}
-
-.container-skinColor{
-  height: 100%;
-  width: 100%;
-  border: 1px solid black;
+.title-btn-front{
   display: flex;
-  justify-content: center;
-  flex-direction: column;
-  padding-bottom: 50px;
+  flex-direction: row;
+  align-items: center;
+  button{
+    margin-left: 50%;
+    border-radius: 5px;
+    background-color:var(--ion-color-secondary);
+    transition: .3s ease all; /*delay*/
+  }
 }
 
-.buttons-skinColor{
+.title-btn-back{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  button{
+
+    border-radius: 5px;
+    background-color:var(--ion-color-secondary);
+    transition: .3s ease all; /*delay*/
+  }
+  p{
+    margin-left: 10px;
+  }
+}
+.container-color-picker{
+
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  .colorPicker{
+    width: 60px;
+    height: 60px;
+    margin:10px;
+    border-radius: 30px;
+  }
+  .colorPickerSkin{
+    width: 90px;
+    height: 90px;
+    margin:10px;
+    border-radius: 50px;
+  }
+}
+
+.box-eye{
+  display: flex;
+  display: row;
+  flex-wrap: wrap;
+  align-content: center;
+  justify-content: center;
+  gap: 20px 25px;
+  padding-left: 10px;
+  padding-right: 10px;
+  .opt-eye{
+    width: 100px;
+    height: 100px;
+    transition: .1s ease all; /*delay*/
+    img{
+      border-radius: 20px;
+    }
+  }
+
+  .opt-eye:hover, .bnt:hover{
+    opacity: 0.8;
+  }
+}
+
+
+.post-item {
+  margin-bottom: 16px;
+
+  .post-header {
+    padding: 8px;
+  }
+
+  .post-media {
+    font-size: 0;
+    display: flex;
+    justify-content: center;
+
+    img, video {
+      width: 70%;
+    }
+
+
+  }
+
+
+  .post-stats, .post-comments {
+    padding: 0 12px 8px;
+  }
+
+  .hash-tag {
+    text-decoration: none;
+    margin-right: 4px;
+  }
+
+  ion-input{
+    color: black;
+  }
+
+  .post-comments {
+    line-height: 1.4;
+
+    .username {
+      font-weight: 700;
+      margin-right: 4px;
+    }
+
+    .comment-item {
+      &.reply {
+        margin: 4px 0 4px 16px;
+        padding-left: 8px;
+        border-left: 3px solid var(--ion-color-light);
+      }
+    }
+
+    ion-icon {
+      vertical-align: middle;
+    }
+  }
+}
+
+.container-opcoes{
+
+  border-radius: 10px;
+  height: 40%;
+  width: 100%;
+  background: linear-gradient(#fff ,#A444A6 );
+  .container{
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    padding-bottom: 30px;
+    padding-top: 10px;
+
+
+    .buttons-skinColor{
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 20px 20px;
+
+      button{
+        width: 50px;
+        height: 50px;
+        border: 1px solid black;
+        border-radius: 70px;
+      }
+
+      #skin1:hover, #skin2:hover, #skin3:hover, #skin4:hover, #skin5:hover{
+        border: 2px solid blue;
+      }
+
+
+    }
+  }
+
+}
+.container-input-name{
+  width: 100%;
+  padding-left: 10px;
+  padding-right: 10px;
+  margin-bottom: 10px;
+
+  ion-input{
+    background-color: #fff;
+    border-radius: 10px;
+    border: 1px solid grey;
+    width: 100%;
+  }
+
+}
+
+
+.buttons-eyes{
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
-  gap: 20px 20px;
+  gap: 30px 30px;
 }
 
-button{
-  width: 70px;
-  height: 50px;
-  border: 1px solid black;
-  border-radius: 10px;
+#colorHairBack, #colorHairFront{
+  border-radius: 6px;
+  padding-top: 0;
+  padding-bottom: 0;
+  height: 2.1em;
+  width: 4em;
+  font-size: 13px;
+  color: white;
+  background-color: #3880ff;
+  border: none;
 }
 
-#skin1:hover, #skin2:hover, #skin3:hover, #skin4:hover, #skin5:hover{
-  border: 2px solid blue;
+ion-icon {
+  width: 24px !important;
+  height: 24px !important;
 }
 
-#skin1{
-  background: #F3EDE8;
+.icon-fab{
+  height: 23px;
 }
 
-#skin2{
-  background: #F2D3B1;
+.container-eye{
+  height: 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 20px;
+  font-size: 20px;
+  .text{
+    margin-bottom: 20px;
+  }
+  ion-button{
+    --background: #3DC2FF;
+  }
 }
-#skin3{
-  background: #ECAD80;
+
+.eye{
+ padding-bottom: 25px;
 }
-#skin4{
-  background: #9E5622;
-}
-#skin5{
-  background: #763900;
-}
+
