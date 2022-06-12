@@ -110,6 +110,11 @@
       width: 70%;
     }
 
+    .post-actions{
+      display: flex;
+      flex-direction: row;
+      justify-content: space-around;
+    }
 
   }
 
@@ -252,7 +257,7 @@ ion-icon {
 
 
 .container-range{
-  width: 100%;
+  width: 80%;
   height: 100%;
   display: flex;
   flex-direction: row;
@@ -260,4 +265,15 @@ ion-icon {
   align-items: center;
   padding-left: 10px;
   padding-right: 10px;
+  ion-range{
+    --knob-size: 40px;
+    font-size: 15px;
+  }
 }
+
+
+.advanced-options-card{
+  width: 100%;
+  height: 500px;
+}
+

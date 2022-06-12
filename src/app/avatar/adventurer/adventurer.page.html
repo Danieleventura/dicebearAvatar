@@ -22,42 +22,43 @@
   </div>
 </div>-->
 
-<div class="post-list">
-  <div class="post-item">
-    <div class="post-header">
-      <ion-row class="ion-justify-content-center ion-align-items-center">
-        <ion-col size="auto">
-          <ion-avatar class="avatar-sm">
-            <img src= "https://avatars.dicebear.com/api/adventurer/your-custom-seed.svg?b=%2360d7cf"/>
-          </ion-avatar>
-        </ion-col>
-        <ion-col>
-          <strong>Adventurer</strong>
-        </ion-col>
-        <ion-col size="auto">
-          <ion-icon name="ellipsis-horizontal"></ion-icon>
-        </ion-col>
-      </ion-row>
+<div class="container-avatar">
+  <ion-card>
+    <div class="post-list">
+      <div class="post-item">
+        <div class="post-header">
+          <ion-row class="ion-justify-content-center ion-align-items-center">
+            <ion-col size="auto">
+              <ion-avatar class="avatar-sm">
+                <img src= "https://avatars.dicebear.com/api/adventurer/your-custom-seed.svg?b=%2360d7cf"/>
+              </ion-avatar>
+            </ion-col>
+            <ion-col>
+              <strong>Adventurer</strong>
+            </ion-col>
+            <ion-button size="small" fill="clear" color="dark" class="icons">
+              <ion-icon name="download-outline" size="large" ></ion-icon>
+            </ion-button>
+          </ion-row>
+        </div>
+        <div class="post-media">
+          <img src= "{{ url}}"/>
+        </div>
+        <div class="post-actions">
+          <ion-row>
+            <ion-col size="auto">
+              <ion-button size="small" fill="clear" color="dark" class="icons" (click)="randomAvatar()">
+                <ion-icon name="shuffle-outline" size="large"></ion-icon>
+              </ion-button>
+            </ion-col>
+          </ion-row>
+        </div>
+        <div class="container-input-name">
+          <ion-input mode="ios" (ionChange)="ionChange($event, null)" id="input-seed" placeholder="Your-name" name="seed" [(ngModel)]="seed"></ion-input>
+        </div>
+      </div>
     </div>
-    <div class="post-media">
-      <img src= "{{ url}}"/>
-    </div>
-    <div class="post-actions">
-      <ion-row>
-        <ion-col size="auto">
-          <ion-button size="small" fill="clear" color="dark" class="icons" (click)="randomAvatar()">
-            <ion-icon name="shuffle-outline"></ion-icon>
-          </ion-button>
-          <ion-button size="small" fill="clear" color="dark" class="icons">
-            <ion-icon name="download-outline"></ion-icon>
-          </ion-button>
-        </ion-col>
-      </ion-row>
-    </div>
-    <div class="container-input-name">
-      <ion-input mode="ios" (ionChange)="ionChange($event, null)" id="input-seed" placeholder="Your-name" name="seed" [(ngModel)]="seed"></ion-input>
-    </div>
-  </div>
+  </ion-card>
 </div>
 
 <ion-content>
@@ -156,46 +157,51 @@
   </div>
 
   <div class="avatar-opt" id="div-options" style="display:none">
-    <div class="container-eye" >
-      <div class="title-btn-front">
-        <p class="text">Advanced Options</p>
-      </div>
-      <div class="container-color-picker">
-        <p> Background Color </p>
-        <div class="colorPickerSkin"
-            ngx-colors-trigger
-            [style.background]="selectedColorBackground"
-            (input)="changeStyle(null, 'colorBackground')"
-            [(ngModel)]="selectedColorBackground">
+
+    <ion-card class="advanced-options-card">
+      <div class="container-eye" >
+        <div class="title-btn-front">
+          <p class="text">Advanced Options</p>
+        </div>
+        <div class="container-color-picker">
+          <p> Background Color </p>
+          <div class="colorPickerSkin"
+              ngx-colors-trigger
+              [style.background]="selectedColorBackground"
+              (input)="changeStyle(null, 'colorBackground')"
+              [(ngModel)]="selectedColorBackground">
+          </div>
+        </div>
+        <div class="container-range">
+          <ion-label>Radius: </ion-label>
+          <ion-range min="0" max="50" color="secondary" pin="true" (ionChange)="ionChange($event, 'radius')">
+          <ion-label slot="start">0</ion-label>
+            <ion-label slot="end">50</ion-label>
+          </ion-range>
+        </div>
+        <div class="container-range">
+          <ion-label>Scale: </ion-label>
+          <ion-range min="0" max="200" color="secondary" pin="true" (ionChange)="ionChange($event, 'scale')" >
+          <ion-label slot="start">0</ion-label>
+            <ion-label slot="end">200</ion-label>
+          </ion-range>
+        </div>
+
+        <div class="container-range">
+          <ion-label>Rotate: </ion-label>
+          <ion-range min="0" max="360" color="secondary" pin="true" (ionChange)="ionChange($event, 'rotate')" >
+          <ion-label slot="start">0</ion-label>
+            <ion-label slot="end">360</ion-label>
+          </ion-range>
+        </div>
+
+        <div class="container-range">
+          <ion-label>Flip: </ion-label>
+          <ion-toggle [(ngModel)]="flipToggle" (ionChange)="ionChange($event, 'flip')" color="secondary"></ion-toggle>
         </div>
       </div>
-      <div class="container-range">
-        <ion-label>Radius: </ion-label>
-        <ion-range min="0" max="50" color="secondary" pin="true" (ionChange)="ionChange($event, 'radius')">
-        <ion-label slot="start">0</ion-label>
-          <ion-label slot="end">50</ion-label>
-        </ion-range>
-      </div>
-      <div class="container-range">
-        <ion-label>Scale: </ion-label>
-        <ion-range min="0" max="200" color="secondary" pin="true" (ionChange)="ionChange($event, 'scale')" >
-        <ion-label slot="start">0</ion-label>
-          <ion-label slot="end">200</ion-label>
-        </ion-range>
-      </div>
-      <div class="container-range">
-        <ion-label>Flip: </ion-label>
-        <ion-toggle [(ngModel)]="flipToggle" (ionChange)="ionChange($event, 'flip')" color="secondary"></ion-toggle>
-      </div>
-      <div class="container-range">
-        <ion-label>Rotate: </ion-label>
-        <ion-range min="0" max="360" color="secondary" pin="true" (ionChange)="ionChange($event, 'rotate')" >
-        <ion-label slot="start">0</ion-label>
-          <ion-label slot="end">360</ion-label>
-        </ion-range>
-      </div>
+    </ion-card>
 
-    </div>
   </div>
 
   <ion-fab horizontal="start" vertical="bottom" slot="fixed">
