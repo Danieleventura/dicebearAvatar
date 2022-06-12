@@ -402,7 +402,6 @@ export class AdventurerPage implements OnInit {
      id: 'variant01'
     }];
   mouth='';
-  mouthCount = 0;
 
   flipVar = 'flip=' + false;
   backgroundColor = '';
@@ -435,7 +434,7 @@ export class AdventurerPage implements OnInit {
   //variavel para colorPicker
   selectedColorHair= '#26a69a'; //pickerHair
   selectedColorSkin= '#90caf9';//pickerSkin
-
+  selectedColorBackground = '#ba1c88';
 
   constructor(public actionSheetController: ActionSheetController) {
   }
@@ -447,6 +446,21 @@ export class AdventurerPage implements OnInit {
     this.url = 'https://avatars.dicebear.com/api/adventurer/:'+ this.seed+ '.svg?' +this.eye + this.eyebrow + this.mouth
     + this.hair +  this.backgroundColor + this.hairColor + this.skin + this.acessorie;
     console.log(this.url);
+  }
+
+  randomAvatar(){ //gerar avatar random e limpar variaveis
+    this.seed = '';
+    this.skin='';
+    this.hairColor = '';
+    this.hair = '';
+    this.eye = '';
+    this.eyebrow =  '';
+    this.mouth='';
+    this.flipVar = '';
+    this.backgroundColor = '';
+    this.acessorie = '';
+    console.log('Random avatar');
+    this.atualizarUrl();
   }
 
   ionChange(event){ //random seed//random avatar
@@ -463,6 +477,7 @@ export class AdventurerPage implements OnInit {
       document.getElementById('div-skin').style.display = 'none';
       document.getElementById('div-aces').style.display = 'none';
       document.getElementById('div-eyebrows').style.display = 'none';
+      document.getElementById('div-options').style.display = 'none';
     }else if(el === 'div-mouth'){
       document.getElementById('div-mouth').style.display = 'block';
       document.getElementById('div-eye').style.display = 'none';
@@ -470,6 +485,7 @@ export class AdventurerPage implements OnInit {
       document.getElementById('div-skin').style.display = 'none';
       document.getElementById('div-aces').style.display = 'none';
       document.getElementById('div-eyebrows').style.display = 'none';
+      document.getElementById('div-options').style.display = 'none';
     } else if(el === 'div-hair'){
       document.getElementById('div-hair').style.display = 'block';
       document.getElementById('div-mouth').style.display = 'none';
@@ -477,6 +493,7 @@ export class AdventurerPage implements OnInit {
       document.getElementById('div-skin').style.display = 'none';
       document.getElementById('div-aces').style.display = 'none';
       document.getElementById('div-eyebrows').style.display = 'none';
+      document.getElementById('div-options').style.display = 'none';
     } else if(el === 'div-skin'){
       document.getElementById('div-skin').style.display = 'block';
       document.getElementById('div-mouth').style.display = 'none';
@@ -484,6 +501,7 @@ export class AdventurerPage implements OnInit {
       document.getElementById('div-hair').style.display = 'none';
       document.getElementById('div-aces').style.display = 'none';
       document.getElementById('div-eyebrows').style.display = 'none';
+      document.getElementById('div-options').style.display = 'none';
     } else if(el === 'div-aces'){
       document.getElementById('div-aces').style.display = 'block';
       document.getElementById('div-mouth').style.display = 'none';
@@ -491,6 +509,7 @@ export class AdventurerPage implements OnInit {
       document.getElementById('div-hair').style.display = 'none';
       document.getElementById('div-skin').style.display = 'none';
       document.getElementById('div-eyebrows').style.display = 'none';
+      document.getElementById('div-options').style.display = 'none';
     } else if(el === 'div-eyebrows'){
       document.getElementById('div-eyebrows').style.display = 'block';
       document.getElementById('div-mouth').style.display = 'none';
@@ -498,6 +517,15 @@ export class AdventurerPage implements OnInit {
       document.getElementById('div-skin').style.display = 'none';
       document.getElementById('div-aces').style.display = 'none';
       document.getElementById('div-eye').style.display = 'none';
+      document.getElementById('div-options').style.display = 'none';
+    } else if(el === 'div-options'){
+      document.getElementById('div-eyebrows').style.display = 'none';
+      document.getElementById('div-mouth').style.display = 'none';
+      document.getElementById('div-hair').style.display = 'none';
+      document.getElementById('div-skin').style.display = 'none';
+      document.getElementById('div-aces').style.display = 'none';
+      document.getElementById('div-eye').style.display = 'none';
+      document.getElementById('div-options').style.display = 'block';
     }
   }
 
@@ -549,10 +577,11 @@ export class AdventurerPage implements OnInit {
     this.atualizarUrl();
   }
 
-  background(cor){
-    this.backgroundColor = '&backgroundColor=' + cor;
+  changeBackgroundColor(){
+    this.backgroundColor = '&backgroundColor=' + this.selectedColorBackground.replace('#', '%23');
     this.atualizarUrl();
  }
+
 
 }
 

@@ -45,7 +45,10 @@
     <div class="post-actions">
       <ion-row>
         <ion-col size="auto">
-          <ion-button size="small" fill="clear" color="dark">
+          <ion-button size="small" fill="clear" color="dark" class="icons" (click)="randomAvatar()">
+            <ion-icon name="shuffle-outline"></ion-icon>
+          </ion-button>
+          <ion-button size="small" fill="clear" color="dark" class="icons">
             <ion-icon name="download-outline"></ion-icon>
           </ion-button>
         </ion-col>
@@ -56,6 +59,7 @@
      </div>
   </div>
 </div>
+
 <ion-content>
 
   <div class="avatar-opt" id="div-eye" >
@@ -151,6 +155,23 @@
     </div>
   </div>
 
+  <div class="avatar-opt" id="div-options" style="display:none">
+    <div class="container-eye" >
+      <div class="title-btn-front">
+        <p class="text">Advanced Options</p>
+      </div>
+      <div class="container-color-picker">
+        <p> Background Color </p>
+        <div class="colorPickerSkin"
+            ngx-colors-trigger
+            [style.background]="selectedColorBackground"
+            (input)="changeBackgroundColor()"
+            [(ngModel)]="selectedColorBackground">
+        </div>
+      </div>
+    </div>
+  </div>
+
   <ion-fab horizontal="start" vertical="bottom" slot="fixed">
     <ion-fab-button color="secondary">
       <ion-icon md="caret-up" ios="chevron-up-circle-outline"></ion-icon>
@@ -170,6 +191,9 @@
       </ion-fab-button>
       <ion-fab-button color="light" (click)="mudarestado('div-skin')">
         <img class="icon-fab" src="/assets/img/skin.png"/>
+      </ion-fab-button>
+      <ion-fab-button color="light" (click)="mudarestado('div-options')">
+        <ion-icon name="color-fill-outline"></ion-icon>
       </ion-fab-button>
     </ion-fab-list>
   </ion-fab>
