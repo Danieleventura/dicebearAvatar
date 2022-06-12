@@ -403,8 +403,12 @@ export class AdventurerPage implements OnInit {
     }];
   mouth='';
 
-  flipVar = 'flip=' + false;
+  flipToggle = false;
+  flip = '';
   backgroundColor = '';
+  radius = '';
+  scale ='';
+  rotate = '';
 
   acessories = [
     {url: this.urlButtons +  '&acessories=sunglasses&accessoiresProbability=100',
@@ -428,8 +432,10 @@ export class AdventurerPage implements OnInit {
     ];
   acessorie = '';
   //request
-  url = 'https://avatars.dicebear.com/api/adventurer/:'+ this.seed+ '.svg?'
-  + this.hair +  this.backgroundColor + this.hairColor;
+  url = 'https://avatars.dicebear.com/api/adventurer/:'+ this.seed+ '.svg?';
+
+  namesSeed=['Alice',	'Laura', 'Beatriz',	'Manuela', 'Helena',	'Maria', 'Eduarda', 'Isabela',	'Valentina','Júlia',	'Sophia',
+  'Artur',	'Matheus', 'Bernardo',	'Miguel', 'Davi',	'Gael', 'Gabriel',	'Rafael', 'Lucas',	'Theo'];
 
   //variavel para colorPicker
   selectedColorHair= '#26a69a'; //pickerHair
@@ -444,7 +450,7 @@ export class AdventurerPage implements OnInit {
 
   atualizarUrl(){
     this.url = 'https://avatars.dicebear.com/api/adventurer/:'+ this.seed+ '.svg?' +this.eye + this.eyebrow + this.mouth
-    + this.hair +  this.backgroundColor + this.hairColor + this.skin + this.acessorie;
+    + this.hair +  this.backgroundColor + this.hairColor + this.skin + this.acessorie + this.radius + this.scale  + this.flip + this.rotate;
     console.log(this.url);
   }
 
@@ -456,14 +462,37 @@ export class AdventurerPage implements OnInit {
     this.eye = '';
     this.eyebrow =  '';
     this.mouth='';
-    this.flipVar = '';
     this.backgroundColor = '';
     this.acessorie = '';
-    console.log('Random avatar');
+    this.radius = '';
+    this.scale = '';
+    this.flip = '';
+    this.flipToggle = false;
+    this.rotate = '';
+
+    //gerando avatar aleatorio
+
+    this.seed = this.namesSeed[(Math.floor(Math.random() * this.namesSeed.length-1))];
+    console.log('Random avatar: ' + this.seed);
     this.atualizarUrl();
   }
 
-  ionChange(event){ //random seed//random avatar
+  ionChange(event, type){ //random seed//random avatar
+    if(type === 'radius'){
+      this.radius = '&radius=' + event.target.value;
+    } else if(type === 'scale'){
+      this.scale = '&scale=' + event.target.value;
+    } else if(type === 'flip'){
+      if(this.flipToggle === true){
+        this.flip = '&flip=' + true;
+      }else{
+        this.flip = '&flip=' + false;
+      }
+    } else if(type === 'rotate'){
+      this.rotate = '&rotate=' + event.target.value;
+    }
+
+
     this.atualizarUrl();
   }
 
@@ -529,59 +558,32 @@ export class AdventurerPage implements OnInit {
     }
   }
 
-  changeAcessorie(acesssoriId){
-    this.acessorie = '&accessoires=' + acesssoriId + '&accessoiresProbability=100';
+  changeStyle(id, type){
+
+    if(type === 'eye'){
+      this.eye = '&eyes=' + id;
+    } else if(type === 'eyebrows'){
+      this.eyebrow = '&eyebrows=' + id;
+    } else if(type === 'mouth'){
+      this.mouth = '&mouth=' + id;
+    } else if(type === 'acessorie'){
+      this.acessorie = '&accessoires=' + id + '&accessoiresProbability=100';
+    } else if(type === 'colorHair'){
+      this.hairColor = '&hairColor=' + this.selectedColorHair.replace('#', '%23');
+    } else if(type === 'hair'){
+      this.hair = '&hair=' + id;
+    } else if(type === 'colorSkin'){
+      this.skin = '&skinColor=' + this.selectedColorSkin.replace('#', '%23');
+    } else if(type === 'colorBackground'){
+      this.backgroundColor = '&backgroundColor=' + this.selectedColorBackground.replace('#', '%23');
+    }
+
     this.atualizarUrl();
   }
+
   onChange(value){
     console.log(value);
   }
-
-  changeMouth(mouthId){
-    this.mouth = '&mouth=' + mouthId;
-    this.atualizarUrl();
-  }
-
-  changeEyebrows(eyebrowId){
-    this.eyebrow = '&eyebrows=' + eyebrowId;
-    this.atualizarUrl();
-  }
-
-  changeEye(eyeId){
-      this.eye = '&eyes=' + eyeId;
-      this.atualizarUrl();
-    }
-
-  changeColorHair(){ //funcao para quando colorpicker hari mudar
-    this.hairColor = '&hairColor=' + this.selectedColorHair.replace('#', '%23');
-    this.atualizarUrl();
-  }
-
-  changeHair(hairId){
-    this.hair = '&hair=' + hairId;
-    this.atualizarUrl();
-  }
-
-  changeColorSkin(){
-    this.skin = '&skinColor=' + this.selectedColorSkin.replace('#', '%23');
-    this.atualizarUrl();
-  }
-
-  flip(){
-    if(this.flipVar === 'flip=true'){
-      this.flipVar = 'flip=' + false;
-    }else{
-      this.flipVar= 'flip=' + true;
-    }
-
-    this.atualizarUrl();
-  }
-
-  changeBackgroundColor(){
-    this.backgroundColor = '&backgroundColor=' + this.selectedColorBackground.replace('#', '%23');
-    this.atualizarUrl();
- }
-
 
 }
 

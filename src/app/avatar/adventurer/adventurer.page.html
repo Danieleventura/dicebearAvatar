@@ -55,8 +55,8 @@
       </ion-row>
     </div>
     <div class="container-input-name">
-      <ion-input mode="ios" (ionChange)="ionChange($event)" id="input-seed" placeholder="Your-name" name="seed" [(ngModel)]="seed"></ion-input>
-     </div>
+      <ion-input mode="ios" (ionChange)="ionChange($event, null)" id="input-seed" placeholder="Your-name" name="seed" [(ngModel)]="seed"></ion-input>
+    </div>
   </div>
 </div>
 
@@ -69,7 +69,7 @@
         <button class="bnt" (click)="mudarestado('div-eyebrows')"><ion-icon name="arrow-forward-outline" ></ion-icon></button>
       </div>
       <div class="box-eye">
-        <div class="opt-eye" *ngFor="let eye of eyes" (click)="changeEye(eye.id)">
+        <div class="opt-eye" *ngFor="let eye of eyes" (click)="changeStyle(eye.id, 'eye')">
           <img src="{{eye.url}}" alt="">
         </div>
       </div>
@@ -83,7 +83,7 @@
         <p class="text">Eyebrows</p>
       </div>
       <div class="box-eye">
-        <div class="opt-eye" *ngFor="let eyebrow of eyebrows" (click)="changeEyebrows(eyebrow.id)">
+        <div class="opt-eye" *ngFor="let eyebrow of eyebrows" (click)="changeStyle(eyebrow.id, 'eyebrows')">
           <img src="{{eyebrow.url}}" alt="">
         </div>
       </div>
@@ -96,7 +96,7 @@
         <p class="text">Mouth</p>
       </div>
       <div class="box-eye">
-        <div class="opt-eye" *ngFor="let mouth of mouths" (click)="changeMouth(mouth.id)">
+        <div class="opt-eye" *ngFor="let mouth of mouths" (click)="changeStyle(mouth.id, 'mouth')">
           <img src="{{mouth.url}}" alt="">
         </div>
       </div>
@@ -113,12 +113,12 @@
         <div class="colorPicker"
             ngx-colors-trigger
             [style.background]="selectedColorHair"
-            (input)="changeColorHair()"
+            (input)="changeStyle(null, 'colorHair')"
             [(ngModel)]="selectedColorHair">
         </div>
       </div>
       <div class="box-eye">
-        <div class="opt-eye" *ngFor="let hair of hairs" (click)="changeHair(hair.id)">
+        <div class="opt-eye" *ngFor="let hair of hairs" (click)="changeStyle(hair.id, 'hair')">
           <img src="{{hair.url}}" alt="">
         </div>
       </div>
@@ -135,7 +135,7 @@
         <div class="colorPickerSkin"
             ngx-colors-trigger
             [style.background]="selectedColorSkin"
-            (input)="changeColorSkin()"
+            (input)="changeStyle(null, 'colorSkin')"
             [(ngModel)]="selectedColorSkin">
         </div>
       </div>
@@ -148,7 +148,7 @@
         <p class="text">Accessoires</p>
       </div>
       <div class="box-eye">
-        <div class="opt-eye" *ngFor="let acessorie of acessories" (click)="changeAcessorie(acessorie.id)">
+        <div class="opt-eye" *ngFor="let acessorie of acessories" (click)="changeStyle(acessorie.id, 'acessorie')">
           <img src="{{acessorie.url}}" alt="">
         </div>
       </div>
@@ -165,10 +165,36 @@
         <div class="colorPickerSkin"
             ngx-colors-trigger
             [style.background]="selectedColorBackground"
-            (input)="changeBackgroundColor()"
+            (input)="changeStyle(null, 'colorBackground')"
             [(ngModel)]="selectedColorBackground">
         </div>
       </div>
+      <div class="container-range">
+        <ion-label>Radius: </ion-label>
+        <ion-range min="0" max="50" color="secondary" pin="true" (ionChange)="ionChange($event, 'radius')">
+        <ion-label slot="start">0</ion-label>
+          <ion-label slot="end">50</ion-label>
+        </ion-range>
+      </div>
+      <div class="container-range">
+        <ion-label>Scale: </ion-label>
+        <ion-range min="0" max="200" color="secondary" pin="true" (ionChange)="ionChange($event, 'scale')" >
+        <ion-label slot="start">0</ion-label>
+          <ion-label slot="end">200</ion-label>
+        </ion-range>
+      </div>
+      <div class="container-range">
+        <ion-label>Flip: </ion-label>
+        <ion-toggle [(ngModel)]="flipToggle" (ionChange)="ionChange($event, 'flip')" color="secondary"></ion-toggle>
+      </div>
+      <div class="container-range">
+        <ion-label>Rotate: </ion-label>
+        <ion-range min="0" max="360" color="secondary" pin="true" (ionChange)="ionChange($event, 'rotate')" >
+        <ion-label slot="start">0</ion-label>
+          <ion-label slot="end">360</ion-label>
+        </ion-range>
+      </div>
+
     </div>
   </div>
 
