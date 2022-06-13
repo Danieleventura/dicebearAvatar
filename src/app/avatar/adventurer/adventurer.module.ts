@@ -8,6 +8,7 @@ import { AdventurerPageRoutingModule } from './adventurer-routing.module';
 
 import { AdventurerPage } from './adventurer.page';
 import { NgxColorsModule } from 'ngx-colors';
+
 @NgModule({
   imports: [
     CommonModule,

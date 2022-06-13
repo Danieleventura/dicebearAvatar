@@ -2,8 +2,9 @@
 import { element } from 'protractor';
 import { Component, OnInit } from '@angular/core';
 import { ActionSheetController } from '@ionic/angular';
-
-
+import { FileTransfer, FileUploadOptions, FileTransferObject } from '@awesome-cordova-plugins/file-transfer/ngx';
+import { File } from '@ionic-native/file/ngx';
+import { ToastController } from '@ionic/angular';
 @Component({
   selector: 'app-adventurer',
   templateUrl: './adventurer.page.html',
@@ -442,10 +443,47 @@ export class AdventurerPage implements OnInit {
   selectedColorSkin= '#90caf9';//pickerSkin
   selectedColorBackground = '#ba1c88';
 
-  constructor(public actionSheetController: ActionSheetController) {
+  constructor( public actionSheetController: ActionSheetController, private transfer:
+    FileTransfer, private file: File, public toastController: ToastController) {
   }
 
   ngOnInit() {
+  }
+
+
+
+  download(){
+
+    const fileTransfer: FileTransferObject = this.transfer.create();
+    const URL = 'https://avatars.dicebear.com/api/croodles/youfcfccr-custom-seed.png';
+
+    this.file.writeFile(this.file.externalRootDirectory + '/Download/','teste.png', URL, { replace: true })
+.then(() => {
+
+      const imagePath ='';
+
+      this.presentToast1(imagePath);
+    })
+    .catch((error) => {
+      this.presentToast2(error.error);
+    }
+   );
+  }
+
+  async presentToast1(path) {
+    const toast = await this.toastController.create({
+      message: 'File was downloaded","Path: ' + path,
+      duration: 2000,
+    });
+    toast.present();
+  }
+
+  async presentToast2(error) {
+    const toast = await this.toastController.create({
+      message: 'error' + error,
+      duration: 2000,
+    });
+    toast.present();
   }
 
   atualizarUrl(){
@@ -567,7 +605,11 @@ export class AdventurerPage implements OnInit {
     } else if(type === 'mouth'){
       this.mouth = '&mouth=' + id;
     } else if(type === 'acessorie'){
-      this.acessorie = '&accessoires=' + id + '&accessoiresProbability=100';
+      if(id === null){
+        this.acessorie = '';
+      }else{
+        this.acessorie = '&accessoires=' + id + '&accessoiresProbability=100';
+      }
     } else if(type === 'colorHair'){
       this.hairColor = '&hairColor=' + this.selectedColorHair.replace('#', '%23');
     } else if(type === 'hair'){
@@ -585,5 +627,8 @@ export class AdventurerPage implements OnInit {
     console.log(value);
   }
 
+async saveAvatar(){
+  console.log('teste salvando foto');
 }
 
+}

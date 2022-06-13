@@ -36,12 +36,12 @@
             <ion-col>
               <strong>Adventurer</strong>
             </ion-col>
-            <ion-button size="small" fill="clear" color="dark" class="icons">
+            <ion-button size="small" fill="clear" color="dark" class="icons" (click)="download()">
               <ion-icon name="download-outline" size="large" ></ion-icon>
             </ion-button>
           </ion-row>
         </div>
-        <div class="post-media">
+        <div class="post-media" >
           <img src= "{{ url}}"/>
         </div>
         <div class="post-actions">
@@ -149,6 +149,9 @@
         <p class="text">Accessoires</p>
       </div>
       <div class="box-eye">
+        <div class="opt-eye" (click)="changeStyle(null, 'acessorie')">
+          <img src="assets\img\icone-x-noir.png" alt="">
+        </div>
         <div class="opt-eye" *ngFor="let acessorie of acessories" (click)="changeStyle(acessorie.id, 'acessorie')">
           <img src="{{acessorie.url}}" alt="">
         </div>
