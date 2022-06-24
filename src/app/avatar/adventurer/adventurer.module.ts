@@ -8,7 +8,7 @@ import { AdventurerPageRoutingModule } from './adventurer-routing.module';
 
 import { AdventurerPage } from './adventurer.page';
 import { NgxColorsModule } from 'ngx-colors';
-
+import { AndroidPermissions } from '@awesome-cordova-plugins/android-permissions/ngx';
 @NgModule({
   imports: [
     CommonModule,
@@ -17,6 +17,7 @@ import { NgxColorsModule } from 'ngx-colors';
     AdventurerPageRoutingModule,
     NgxColorsModule
   ],
+  providers:[AndroidPermissions],
   declarations: [AdventurerPage]
 })
 export class AdventurerPageModule {}

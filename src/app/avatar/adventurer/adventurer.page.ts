@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/naming-convention */
+/* eslint-disable @typescript-eslint/consistent-type-assertions */
 /* eslint-disable prefer-arrow/prefer-arrow-functions */
 import { element } from 'protractor';
 import { Component, OnInit } from '@angular/core';
@@ -5,11 +7,16 @@ import { ActionSheetController } from '@ionic/angular';
 import { FileTransfer, FileUploadOptions, FileTransferObject } from '@awesome-cordova-plugins/file-transfer/ngx';
 import { File } from '@ionic-native/file/ngx';
 import { ToastController } from '@ionic/angular';
+import { AndroidPermissions } from '@awesome-cordova-plugins/android-permissions/ngx';
+import { resourceLimits } from 'worker_threads';
+import {NavController, Platform} from '@ionic/angular';
 @Component({
   selector: 'app-adventurer',
   templateUrl: './adventurer.page.html',
   styleUrls: ['./adventurer.page.scss'],
 })
+
+
 export class AdventurerPage implements OnInit {
   seed = '';
 
@@ -443,36 +450,89 @@ export class AdventurerPage implements OnInit {
   selectedColorSkin= '#90caf9';//pickerSkin
   selectedColorBackground = '#ba1c88';
 
+  appPath: string;
+  dataPath: string;
+
   constructor( public actionSheetController: ActionSheetController, private transfer:
-    FileTransfer, private file: File, public toastController: ToastController) {
+    FileTransfer, private file: File, public toastController: ToastController, private androidPermissions: AndroidPermissions,
+    public navCtrl: NavController,public platform: Platform,) {
   }
 
   ngOnInit() {
+    this.definePaths();
+  }
+
+  /**
+   * Define paths based on platform running
+   */
+  definePaths() {
+    if (this.platform.is('ios')) {
+      this.appPath = this.file.documentsDirectory;
+      this.dataPath = this.file.documentsDirectory;
+
+    } else {
+      this.appPath = this.file.applicationDirectory;
+      this.dataPath = this.file.dataDirectory;
+      this.presentToast1(this.dataPath);
+    }
+  }
+
+  getPermissionToDownload(){
+    this.androidPermissions.checkPermission(this.androidPermissions.PERMISSION.WRITE_EXTERNAL_STORAGE).then(
+      result => {
+        if (result.hasPermission) {
+          this.definePaths();
+          this.downloadAvatar();
+        } else {
+          this.androidPermissions.requestPermission(this.androidPermissions.PERMISSION.WRITE_EXTERNAL_STORAGE).then(result2 => {
+            if (result2.hasPermission) {
+              this.definePaths();
+              this.downloadAvatar();
+            }
+          });
+        }
+      },
+      err => this.androidPermissions.requestPermission(this.androidPermissions.PERMISSION.WRITE_EXTERNAL_STORAGE)
+    );
   }
 
 
-
-  download(){
+  downloadAvatar(){
 
     const fileTransfer: FileTransferObject = this.transfer.create();
-    const URL = 'https://avatars.dicebear.com/api/croodles/youfcfccr-custom-seed.png';
+    const URL = 'https://avatars.dicebear.com/api/croodles/youfcfccr-custom-seed.svg';
+    const ROOT_DIRECTORY = 'file:///sdcard//';
+    const downloadFolderName = 'Download';
+    //then your code
+    //'file:///storage/emulated/0/Download/'
+    const filePath =this.file.externalRootDirectory +'Download/';
+    this.androidPermissions.requestPermissions([this.androidPermissions.PERMISSION.READ_EXTERNAL_STORAGE,
+      this.androidPermissions.PERMISSION.WRITE_EXTERNAL_STORAGE]).then(e => {
 
-    this.file.writeFile(this.file.externalRootDirectory + '/Download/','teste.png', URL, { replace: true })
-.then(() => {
+    fileTransfer.download(URL, filePath + 'sample.png').then((entry) => {
 
-      const imagePath ='';
+      (<any>window).cordova.plugins.imagesaver.saveImageToGallery(this.file.dataDirectory+'sample.svg',
+      onSaveImageSuccess, onSaveImageError);
 
-      this.presentToast1(imagePath);
-    })
-    .catch((error) => {
-      this.presentToast2(error.error);
+      function onSaveImageSuccess() {
+        this.presentToast1('--------------success');
+        console.log('--------------success');
     }
-   );
+
+    function onSaveImageError(error) {
+      this.presentToast1('--------------error: ' + error.error);
+    }
+
+    }).catch((error) => {
+    this.presentToast2(JSON.stringify(error));
+  });
+});
   }
+
 
   async presentToast1(path) {
     const toast = await this.toastController.create({
-      message: 'File was downloaded","Path: ' + path,
+      message:  'Has permission?' + path,
       duration: 2000,
     });
     toast.present();
