@@ -10,6 +10,8 @@ import { ToastController } from '@ionic/angular';
 import { AndroidPermissions } from '@awesome-cordova-plugins/android-permissions/ngx';
 import { resourceLimits } from 'worker_threads';
 import {NavController, Platform} from '@ionic/angular';
+import { Canvg, presets } from 'canvg';
+
 @Component({
   selector: 'app-adventurer',
   templateUrl: './adventurer.page.html',
@@ -19,6 +21,7 @@ import {NavController, Platform} from '@ionic/angular';
 
 export class AdventurerPage implements OnInit {
   seed = '';
+  preset = presets.offscreen();
 
   urlButtons = 'https://avatars.dicebear.com/api/adventurer/your-custom-seed.svg?b=%235fbfbd'; //avatar para usar nos botoes
   avatar=[
@@ -452,11 +455,10 @@ export class AdventurerPage implements OnInit {
 
   appPath: string;
   dataPath: string;
-
+  v = null;
   constructor( public actionSheetController: ActionSheetController, private transfer:
     FileTransfer, private file: File, public toastController: ToastController, private androidPermissions: AndroidPermissions,
-    public navCtrl: NavController,public platform: Platform,) {
-  }
+    public navCtrl: NavController,public platform: Platform,) {}
 
   ngOnInit() {
     this.definePaths();
@@ -473,7 +475,6 @@ export class AdventurerPage implements OnInit {
     } else {
       this.appPath = this.file.applicationDirectory;
       this.dataPath = this.file.dataDirectory;
-      this.presentToast1(this.dataPath);
     }
   }
 
@@ -496,60 +497,44 @@ export class AdventurerPage implements OnInit {
     );
   }
 
-
   downloadAvatar(){
-
     const fileTransfer: FileTransferObject = this.transfer.create();
-    const URL = 'https://avatars.dicebear.com/api/croodles/youfcfccr-custom-seed.svg';
-    const ROOT_DIRECTORY = 'file:///sdcard//';
-    const downloadFolderName = 'Download';
-    //then your code
-    //'file:///storage/emulated/0/Download/'
     const filePath =this.file.externalRootDirectory +'Download/';
     this.androidPermissions.requestPermissions([this.androidPermissions.PERMISSION.READ_EXTERNAL_STORAGE,
-      this.androidPermissions.PERMISSION.WRITE_EXTERNAL_STORAGE]).then(e => {
+    this.androidPermissions.PERMISSION.WRITE_EXTERNAL_STORAGE]).then(async e => {
+      const imgPng =  await this.svgToPng();
+      fileTransfer.download( imgPng, filePath + this.seed + Math.floor(Math.random() * 1000) + '.png').then((entry) => {
 
-    fileTransfer.download(URL, filePath + 'sample.png').then((entry) => {
+        this.presentToast('Avatar salvo na galeria');
 
-      (<any>window).cordova.plugins.imagesaver.saveImageToGallery(this.file.dataDirectory+'sample.svg',
-      onSaveImageSuccess, onSaveImageError);
-
-      function onSaveImageSuccess() {
-        this.presentToast1('--------------success');
-        console.log('--------------success');
-    }
-
-    function onSaveImageError(error) {
-      this.presentToast1('--------------error: ' + error.error);
-    }
-
-    }).catch((error) => {
-    this.presentToast2(JSON.stringify(error));
+      }).catch((error) => {
+      this.presentToast(JSON.stringify(error));
+      });
   });
-});
   }
 
+  async svgToPng(){
+    const canvas = document.querySelector('canvas');
+		const ctx = canvas.getContext('2d');
+		this.v =  await Canvg.from(ctx, this.url, presets.offscreen());
+		this.v.start();
+		const img = canvas.toDataURL('img/png');
+    return img;
 
-  async presentToast1(path) {
-    const toast = await this.toastController.create({
-      message:  'Has permission?' + path,
-      duration: 2000,
-    });
-    toast.present();
   }
 
-  async presentToast2(error) {
+  async presentToast(path) {
     const toast = await this.toastController.create({
-      message: 'error' + error,
+      message:  path,
       duration: 2000,
     });
     toast.present();
   }
 
   atualizarUrl(){
-    this.url = 'https://avatars.dicebear.com/api/adventurer/:'+ this.seed+ '.svg?' +this.eye + this.eyebrow + this.mouth
+    this.url = 'https://avatars.dicebear.com/api/adventurer/:'+ this.seed+ '.svg?size=1000' +this.eye + this.eyebrow + this.mouth
     + this.hair +  this.backgroundColor + this.hairColor + this.skin + this.acessorie + this.radius + this.scale  + this.flip + this.rotate;
-    console.log(this.url);
+    //console.log(this.url);
   }
 
   randomAvatar(){ //gerar avatar random e limpar variaveis
@@ -686,9 +671,5 @@ export class AdventurerPage implements OnInit {
   onChange(value){
     console.log(value);
   }
-
-async saveAvatar(){
-  console.log('teste salvando foto');
-}
 
 }
